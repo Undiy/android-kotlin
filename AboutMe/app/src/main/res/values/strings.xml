@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">About Me</string>
+    <string name="name">Vin Ortiz</string>
+    <string name="yellow_star">Yellow star</string>
+    <string name="bio">"Vin Oritz is a 18-year-old teenager who enjoys planking, watching sport and jigsaw puzzles. He is energetic and giving, but can also be very selfish and a bit sneaky.
+
+He is Scottish who defines himself as straight. He is currently at school. He has a severe phobia of flying
+
+Physically, Vin is in pretty good shape. He is average-height with pale skin, grey hair and black eyes.
+
+He grew up in a working class neighbourhood. He was raised by his mother, his father having left when he was young.
+Vin goes to Erinsborough School, where his favourite subjects are maths, foreign languages and business studies. He loves his teacher Mrs Davies but hates Mr Kennedy whose interests include speaking in a really annoying voice.
+
+He is currently in a relationship with Blake Sheena Long. Blake is 7 years older than him and works as a kitchen assistant.
+
+Vin's best friend is a teenager called Callum Thomas. They are inseparable. He also hangs around with Kenzie Garcia and Tanisha Mason. They enjoy stealing candy from babies together.
+"</string>
+    <string name="what_is_your_nickname">What is your Nickname?</string>
+    <string name="done">Done</string>
+</resources>
