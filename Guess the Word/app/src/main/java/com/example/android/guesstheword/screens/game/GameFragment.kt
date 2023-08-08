@@ -60,6 +60,13 @@ class GameFragment : Fragment() {
             binding.scoreText.text = it.toString()
         }
 
+        viewModel.eventGameFinish.observe(viewLifecycleOwner) {
+            if (it) {
+                gameFinished()
+                viewModel.onGameFinishComplete()
+            }
+        }
+
         binding.correctButton.setOnClickListener {
             viewModel.onCorrect()
         }
