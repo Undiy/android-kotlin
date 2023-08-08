@@ -18,6 +18,7 @@ package com.example.android.dessertpusher
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -28,6 +29,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleObserver
 import com.example.android.dessertpusher.databinding.ActivityMainBinding
 import timber.log.Timber
+
+const val KEY_REVENUE = "key_revenue"
+const val KEY_DESERTS_SOLD = "key_desserts_sold"
+const val KEY_TIMER_SECONDS_COUNT = "key_timer_seconds_count"
 
 class MainActivity : AppCompatActivity(), LifecycleObserver {
 
@@ -79,6 +84,12 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
             onDessertClicked()
         }
 
+        if (savedInstanceState != null) {
+            revenue = savedInstanceState.getInt(KEY_REVENUE)
+            dessertsSold = savedInstanceState.getInt(KEY_DESERTS_SOLD)
+            dessertTimer.secondsCount = savedInstanceState.getInt(KEY_TIMER_SECONDS_COUNT)
+        }
+
         // Set the TextViews to the right values
         binding.revenue = revenue
         binding.amountSold = dessertsSold
@@ -116,6 +127,24 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         super.onStop()
         Timber.i("onStop called")
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.i("onSaveInstanceState called")
+        outState.putInt(KEY_REVENUE, revenue)
+        outState.putInt(KEY_DESERTS_SOLD, dessertsSold)
+        outState.putInt(KEY_TIMER_SECONDS_COUNT, dessertTimer.secondsCount)
+    }
+
+    override fun onRestoreInstanceState(
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?
+    ) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState)
+        Timber.i("onRestoreInstanceState called")
+    }
+
+
 
     /**
      * Updates the score when the dessert is clicked. Possibly shows a new dessert.
