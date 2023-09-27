@@ -6,9 +6,9 @@
          the whole ViewModel, so that we can access the LiveData,
          click handlers, and state variables. -->
     <data>
-<!--        <variable-->
-<!--            name="sleepDetailViewModel"-->
-<!--            type="com.example.android.trackmysleepquality.sleepdetail.SleepDetailViewModel" />-->
+        <variable
+            name="sleepDetailViewModel"
+            type="com.example.android.trackmysleepquality.sleepdetail.SleepDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
