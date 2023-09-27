@@ -22,7 +22,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
-import kotlinx.coroutines.Job
 
 /**
  * ViewModel for SleepQualityFragment.
@@ -42,12 +41,14 @@ class SleepDetailViewModel(
     /**
      */
 
-    private val night = MediatorLiveData<SleepNight>()
+    private val _night = MediatorLiveData<SleepNight>()
 
-    fun getNight() = night
+    val night: LiveData<SleepNight>
+        get() = _night
 
     init {
-        night.addSource(database.getNightWithId(sleepNightKey), night::setValue)
+        _night.value = SleepNight(sleepNightKey)
+        _night.addSource(database.getNightWithId(sleepNightKey), _night::setValue)
     }
 
     /**
