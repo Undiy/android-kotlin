@@ -42,10 +42,10 @@ class OverviewViewModel : ViewModel() {
     val response: LiveData<String>
         get() = _response
 
-    private val _property = MutableLiveData<MarsProperty>()
+    private val _properties = MutableLiveData<List<MarsProperty>>()
 
-    val property: LiveData<MarsProperty>
-        get() = _property
+    val properties: LiveData<List<MarsProperty>>
+        get() = _properties
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main )
@@ -65,9 +65,7 @@ class OverviewViewModel : ViewModel() {
             var getPropertiesDeferred = MarsApi.retrofitService.getProperties()
             _response.value = try {
                 var listResult = getPropertiesDeferred.await()
-                if (listResult.isNotEmpty()) {
-                    _property.value = listResult[0]
-                }
+                _properties.value = listResult
                 "Success: ${listResult.size} Mars properties retrieved"
             } catch (e: Exception) {
                 "Failure: ${e.message}"
