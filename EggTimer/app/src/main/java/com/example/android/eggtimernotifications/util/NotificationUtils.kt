@@ -34,6 +34,7 @@ private const val FLAGS = PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMU
 /**
  * Builds and delivers the notification.
  *
+ * @param messageBody, notification text.
  * @param context, activity context.
  */
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
@@ -76,7 +77,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentText(messageBody)
 
         .setContentIntent(contentPendingIntent)
-        .setAutoCancel(true)
 
         .setStyle(bigPicStyle)
         .setLargeIcon(eggImage)
@@ -88,9 +88,9 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         )
 
         .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setAutoCancel(true)
 
     notify(NOTIFICATION_ID, builder.build())
-
 }
 
 /**
