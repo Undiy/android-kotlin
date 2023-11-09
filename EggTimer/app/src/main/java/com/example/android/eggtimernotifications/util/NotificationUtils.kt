@@ -29,7 +29,7 @@ import com.example.android.eggtimernotifications.receiver.SnoozeReceiver
 // Notification ID.
 private val NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
-private val FLAGS = 0
+private const val FLAGS = PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
 
 /**
  * Builds and delivers the notification.
@@ -56,7 +56,13 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .bigPicture(eggImage)
         .bigLargeIcon(null)
 
-    // TODO: Step 2.2 add snooze action
+    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
+    val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
+        applicationContext,
+        REQUEST_CODE,
+        snoozeIntent,
+        FLAGS
+    )
 
     // Build the notification
     val builder = NotificationCompat.Builder(
@@ -75,7 +81,11 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setStyle(bigPicStyle)
         .setLargeIcon(eggImage)
 
-        // TODO: Step 2.3 add snooze action
+        .addAction(
+            R.drawable.egg_icon,
+            applicationContext.getString(R.string.snooze),
+            snoozePendingIntent
+        )
 
         // TODO: Step 2.5 set priority
 
