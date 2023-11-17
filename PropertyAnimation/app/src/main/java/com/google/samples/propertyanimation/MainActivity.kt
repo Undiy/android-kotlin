@@ -19,6 +19,7 @@ package com.google.samples.propertyanimation
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -73,27 +74,47 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun ObjectAnimator.disableViewDuringAnimation(view: View) {
+        addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                view.isEnabled = false
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                view.isEnabled = true
+            }
+        })
+    }
+
     private fun rotater() {
-        val animator = ObjectAnimator.ofFloat(star, View.ROTATION, -360f, 0f)
+        ObjectAnimator.ofFloat(star, View.ROTATION, -360f, 0f)
             .apply {
                 duration = 1000
-                addListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator?) {
-                        rotateButton.isEnabled = false
-                    }
-
-                    override fun onAnimationEnd(animation: Animator?) {
-                        rotateButton.isEnabled = true
-                    }
-                })
+                disableViewDuringAnimation(rotateButton)
             }
-        animator.start()
+            .start()
     }
 
     private fun translater() {
+        ObjectAnimator.ofFloat(star, View.TRANSLATION_X, 200f)
+            .apply {
+                repeatCount = 1
+                repeatMode = ObjectAnimator.REVERSE
+                disableViewDuringAnimation(translateButton)
+            }
+            .start()
     }
 
     private fun scaler() {
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 4f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 4f)
+        ObjectAnimator.ofPropertyValuesHolder(star, scaleX, scaleY)
+            .apply {
+                repeatCount = 1
+                repeatMode = ObjectAnimator.REVERSE
+                disableViewDuringAnimation(scaleButton)
+            }
+            .start()
     }
 
     private fun fader() {
