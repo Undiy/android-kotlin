@@ -18,6 +18,7 @@ package com.google.samples.propertyanimation
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
@@ -25,8 +26,13 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.LinearInterpolator
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 
 
 class MainActivity : AppCompatActivity() {
@@ -129,9 +135,8 @@ class MainActivity : AppCompatActivity() {
             .start()
     }
 
-    @SuppressLint("ObjectAnimatorBinding")
     private fun colorizer() {
-        ObjectAnimator.ofArgb(star.parent,"backgroundColor", Color.BLACK, Color.LTGRAY)
+        ObjectAnimator.ofArgb(star.parent as ViewGroup,"backgroundColor", Color.BLACK, Color.LTGRAY)
             .apply {
                 repeatCount = 1
                 repeatMode = ObjectAnimator.REVERSE
@@ -141,6 +146,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun shower() {
+        val container = star.parent as ViewGroup
+        val containerW = container.width
+        val containerH = container.height
+        var starW: Float = star.width.toFloat()
+        var starH: Float = star.height.toFloat()
+
+        val newStar = AppCompatImageView(this)
+        newStar.setImageResource(R.drawable.ic_star)
+        newStar.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT)
+        container.addView(newStar)
+
+        newStar.scaleX = Math.random().toFloat() * 1.5f + .1f
+        newStar.scaleY = newStar.scaleX
+        starW *= newStar.scaleX
+        starH *= newStar.scaleY
+        newStar.translationX = Math.random().toFloat() *
+                containerW - starW / 2
+
+        val mover = ObjectAnimator.ofFloat(newStar, View.TRANSLATION_Y,
+            -starH, containerH + starH)
+        mover.interpolator = AccelerateInterpolator(1f)
+        val rotator = ObjectAnimator.ofFloat(newStar, View.ROTATION,
+            (Math.random() * 1080).toFloat())
+        rotator.interpolator = LinearInterpolator()
+
+        AnimatorSet()
+            .apply {
+                playTogether(mover, rotator)
+                duration = (Math.random() * 1500 + 500).toLong()
+                addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        container.removeView(newStar)
+                    }
+                })
+            }
+            .start()
     }
 
 }
