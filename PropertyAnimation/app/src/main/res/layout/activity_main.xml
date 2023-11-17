@@ -65,14 +65,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/standard_margin"
-            android:text="@string/shower" />
+            android:text="@string/shower"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/colorizeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/standard_margin"
-            android:text="Background Color" />
+            android:text="Background Color"
+            android:textSize="12sp" />
     </com.google.android.flexbox.FlexboxLayout>
 
     <FrameLayout
