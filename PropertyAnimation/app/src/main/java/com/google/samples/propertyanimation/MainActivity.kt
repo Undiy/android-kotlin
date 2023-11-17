@@ -118,6 +118,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fader() {
+        ObjectAnimator.ofFloat(star, View.ALPHA, 0f)
+            .apply {
+                repeatCount = 1
+                repeatMode = ObjectAnimator.REVERSE
+                disableViewDuringAnimation(fadeButton)
+            }
+            .start()
     }
 
     private fun colorizer() {
